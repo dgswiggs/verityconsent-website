@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verity — Your Truth. Verified.</title>
+<meta name="description" content="A verified consent platform for everyone. Safe. Private. Empowering. Coming soon.">
+<meta property="og:title" content="Verity — Your Truth. Verified.">
+<meta property="og:description" content="Consent that belongs to everyone. Join the waitlist.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:    #1A1033;
+    --brand:   #6B4FA0;
+    --brandlt: #8B6FBF;
+    --gold:    #C9A84C;
+    --teal:    #2A9D8F;
+    --white:   #FFFFFF;
+    --muted:   #9488B0;
+    --dimmed:  #5A4E72;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--deep);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+  }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(26,16,51,0.78);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.05);
+  }
+  .logo-lockup { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark { width: 38px; height: 38px; flex-shrink: 0; }
+  .logo-text { display: flex; flex-direction: column; gap: 2px; }
+  .logo-wordmark {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.35rem;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+  .logo-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border: 0.5px solid rgba(201,168,76,0.38);
+    padding: 0.45rem 1.1rem;
+    border-radius: 99px;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 7rem 2rem 6rem;
+    overflow: hidden;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid rgba(201,168,76,0.28);
+    border-radius: 99px;
+    padding: 0.35rem 1rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+  .badge-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 8vw, 6.8rem);
+    font-weight: 600;
+    line-height: 1.02;
+    color: var(--white);
+    max-width: 860px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.2s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--brandlt); }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    color: var(--gold);
+    margin-top: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.3s forwards;
+  }
+  .hero-sub {
+    font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 1.5rem auto 0;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  /* ── FORM ── */
+  .form-wrap {
+    margin-top: 2.8rem;
+    width: 100%;
+    max-width: 440px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.5s forwards;
+  }
+  .form-row { display: flex; width: 100%; }
+  .form-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    padding: 0.85rem 1.2rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-input::placeholder { color: var(--dimmed); }
+  .form-input:focus { border-color: rgba(107,79,160,0.5); background: rgba(255,255,255,0.07); }
+  .form-btn {
+    background: var(--brand);
+    border: none;
+    border-radius: 0 8px 8px 0;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .form-btn:hover { background: var(--brandlt); }
+  .form-note { font-size: 0.7rem; color: var(--dimmed); margin-top: 0.65rem; text-align: center; }
+  .success-msg {
+    display: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--teal);
+    text-align: center;
+    padding-top: 0.5rem;
+  }
+
+  /* ── THREE WORDS ── */
+  .three-words {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.65s forwards;
+  }
+  .word-pill {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dimmed);
+    padding: 0 1.2rem;
+    border-right: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .word-pill:last-child { border-right: none; }
+
+  /* ── SCROLL HINT ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+  .scroll-line {
+    width: 0.5px; height: 44px;
+    background: linear-gradient(to bottom, var(--dimmed), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+  }
+  .scroll-hint span { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dimmed); }
+
+  /* ── BELIEF STRIP ── */
+  .belief-strip {
+    position: relative;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+  .belief-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+  }
+  .belief-item { text-align: center; }
+  .belief-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1;
+  }
+  .belief-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    line-height: 1.5;
+  }
+  .belief-divider {
+    width: 0.5px;
+    background: rgba(255,255,255,0.08);
+    align-self: stretch;
+  }
+
+  /* ── CLOSING ── */
+  .closing {
+    position: relative;
+    padding: 6rem 2rem;
+    text-align: center;
+    overflow: hidden;
+  }
+  .closing-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.18;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .closing-title em { font-style: italic; color: var(--brandlt); }
+  .closing-sub {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 1.3rem auto 2.6rem;
+    max-width: 400px;
+    line-height: 1.75;
+  }
+  .closing-form { display: flex; max-width: 380px; margin: 0 auto; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 0.5px solid rgba(255,255,255,0.05);
+  }
+  .footer-brand { display: flex; align-items: center; gap: 8px; }
+  .footer-wordmark { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 0.88rem; color: var(--dimmed); }
+  .footer-sep { color: var(--dimmed); opacity: 0.4; }
+  .footer-ftag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.78rem; color: var(--dimmed); }
+  .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.74rem; color: var(--dimmed); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--muted); }
+  .footer-legal { width: 100%; font-size: 0.67rem; color: var(--dimmed); opacity: 0.55; padding-top: 0.6rem; border-top: 0.5px solid rgba(255,255,255,0.04); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:0.5; } }
+  @keyframes scrollPulse { 0%,100% { opacity:0.25; } 50% { opacity:0.7; } }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.65); } }
+
+  /* ── MOBILE ── */
+  @media (max-width: 580px) {
+    nav { padding: 0.85rem 1.2rem; }
+    .logo-tagline { display: none; }
+    .form-row, .closing-form { flex-direction: column; }
+    .form-input { border-right: 0.5px solid rgba(255,255,255,0.12); border-radius: 8px; }
+    .form-btn { border-radius: 8px; margin-top: 0.5rem; }
+    .hero { padding: 6rem 1.2rem 5rem; }
+    .closing { padding: 4rem 1.2rem; }
+    footer { padding: 1.5rem 1.2rem; }
+    .belief-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-lockup">
+    <svg class="logo-mark" viewBox="0 0 38 38" fill="none">
+      <circle cx="19" cy="19" r="19" fill="#6B4FA0"/>
+      <line x1="10.5" y1="9.5" x2="19" y2="26" stroke="white" stroke-width="3.2" stroke-linecap="round"/>
+      <line x1="27.5" y1="9.5" x2="19" y2="26" stroke="white" stroke-width="3.2" stroke-linecap="round"/>
+      <circle cx="19" cy="30.5" r="2.8" fill="#C9A84C"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-wordmark">erity</span>
+      <span class="logo-tagline">Your Truth. Verified.</span>
+    </div>
+  </a>
+  <a href="#waitlist" class="nav-cta">Join waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="waitlist">
+  <div class="orb" style="width:700px;height:700px;background:rgba(107,79,160,0.15);top:-220px;right:-200px"></div>
+  <div class="orb" style="width:500px;height:500px;background:rgba(42,157,143,0.08);bottom:-120px;left:-160px"></div>
+  <div class="orb" style="width:300px;height:300px;background:rgba(201,168,76,0.07);top:60%;left:65%"></div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Coming 2026 &nbsp;·&nbsp; Private beta now open
+  </div>
+
+  <h1 class="hero-title">
+    Consent belongs<br>to <em>everyone</em>.
+  </h1>
+
+  <p class="hero-tagline">Your Truth. Verified.</p>
+
+  <p class="hero-sub">
+    Verity is a new kind of consent platform — built for all people, all relationships, all identities. Because clarity is a right, not a privilege. And your truth deserves a record.
+  </p>
+
+  <div class="form-wrap">
+    <div class="form-row" id="row-hero">
+      <input class="form-input" id="email-hero" type="email" placeholder="your@email.com" autocomplete="email">
+      <button class="form-btn" onclick="submit('email-hero','success-hero','row-hero','note-hero')">Get early access</button>
+    </div>
+    <p class="success-msg" id="success-hero">You're on the list. We'll be in touch. ✦</p>
+    <p class="form-note" id="note-hero">No spam. Waitlist members get first access.</p>
+  </div>
+
+  <div class="three-words">
+    <span class="word-pill">Safe</span>
+    <span class="word-pill">Private</span>
+    <span class="word-pill">For everyone</span>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- BELIEF STRIP -->
+<div class="belief-strip">
+  <div class="belief-inner">
+    <div class="belief-item">
+      <div class="belief-num">Your</div>
+      <div class="belief-label">consent is yours alone — regardless of who you are or who you're with</div>
+    </div>
+    <div class="belief-divider"></div>
+    <div class="belief-item">
+      <div class="belief-num">Your</div>
+      <div class="belief-label">truth deserves a verified record — because words can be disputed, proof cannot</div>
+    </div>
+    <div class="belief-divider"></div>
+    <div class="belief-item">
+      <div class="belief-num">Your</div>
+      <div class="belief-label">safety matters — in every relationship, every encounter, every identity</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="orb" style="width:600px;height:400px;background:rgba(107,79,160,0.1);top:-80px;left:50%;transform:translateX(-50%);filter:blur(100px)"></div>
+
+  <h2 class="closing-title">
+    We're not building a legal shield.<br>
+    We're building a <em>culture of truth</em>.
+  </h2>
+
+  <p class="closing-sub">
+    For every person who believes that clarity is strength, and that every yes should be freely given. Something important is coming.
+  </p>
+
+  <div class="closing-form" id="row-closing">
+    <input class="form-input" id="email-closing" type="email" placeholder="your@email.com" style="border-radius:8px 0 0 8px;border-right:none">
+    <button class="form-btn" onclick="submit('email-closing','success-closing','row-closing','note-closing')" style="border-radius:0 8px 8px 0">Join waitlist</button>
+  </div>
+  <p class="success-msg" id="success-closing" style="margin-top:1rem">You're on the list. We'll be in touch. ✦</p>
+  <p class="form-note" id="note-closing" style="margin-top:0.6rem">Early access. No spam. Unsubscribe anytime.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <circle cx="11" cy="11" r="11" fill="#6B4FA0"/>
+      <line x1="6" y1="5.5" x2="11" y2="15.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <line x1="16" y1="5.5" x2="11" y2="15.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="11" cy="18.5" r="1.8" fill="#C9A84C"/>
+    </svg>
+    <span class="footer-wordmark">erity</span>
+    <span class="footer-sep">&nbsp;·&nbsp;</span>
+    <span class="footer-ftag">Your Truth. Verified.</span>
+  </div>
+  <div class="footer-links">
+    <a href="mailto:hello@verityconsent.com.au">hello@verityconsent.com.au</a>
+    <a href="mailto:privacy@verityconsent.com.au">Privacy</a>
+    <a href="#">LinkedIn</a>
+  </div>
+  <p class="footer-legal">© 2026 Verity Consent Pty Ltd (ACN 698 217 524). All rights reserved.</p>
+</footer>
+
+<script>
+function submit(inputId, successId, rowId, noteId) {
+  const input = document.getElementById(inputId);
+  const success = document.getElementById(successId);
+  const row = document.getElementById(rowId);
+  const note = document.getElementById(noteId);
+  const email = input.value.trim();
+
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    input.style.borderColor = 'rgba(226,75,74,0.7)';
+    input.focus();
+    setTimeout(() => input.style.borderColor = '', 1800);
+    return;
+  }
+
+  // TODO: POST to your email capture endpoint (Mailchimp / Resend / ConvertKit)
+  console.log('Waitlist signup:', email);
+
+  if (row) row.style.display = 'none';
+  if (note) note.style.display = 'none';
+  success.style.display = 'block';
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.12 });
+
+['.closing-title', '.closing-sub', '.belief-item'].forEach(sel => {
+  document.querySelectorAll(sel).forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    obs.observe(el);
+  });
+});
+</script>
+</body>
+</html>
