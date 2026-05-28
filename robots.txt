@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://verityconsent.com.au/sitemap.xml
